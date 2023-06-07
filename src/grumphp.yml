@@ -1,2 +1,13 @@
 grumphp:
-    tasks: { phpcs: null }
+    tasks:
+        phpcs:
+            standard: [PSR12]
+            ignore_patterns:
+                - '/vendor/**'
+        phpmd:
+            ruleset: ['cleancode', 'codesize', 'naming']
+        phpunit:
+            always_execute: true
+    fixer:
+        enabled: true
+        fix_by_default: true
