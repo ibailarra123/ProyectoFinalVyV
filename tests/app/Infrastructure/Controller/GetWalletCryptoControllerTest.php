@@ -14,13 +14,12 @@ use Tests\TestCase;
 
 class GetWalletCryptoControllerTest extends TestCase
 {
-
     /**
      * @test
      */
-    public function RequestConParametrosIncorrectosDevuelveError()
+    public function requestConParametrosIncorrectosDevuelveError()
     {
-        $response = $this->get('/api/wallet/');
+        $response = $this->get('/api/wallet/asdfsa');
 
         $response->assertExactJson(['status' => 'Error', 'message' => 'Error parametros incorrectos']);
     }
@@ -28,7 +27,7 @@ class GetWalletCryptoControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestConWalletIdIncorrectoDevuelveError()
+    public function requestConWalletIdIncorrectoDevuelveError()
     {
         $response = $this->get('/api/wallet/1');
 
@@ -38,7 +37,7 @@ class GetWalletCryptoControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestCorrectaDevuelveWalletId()
+    public function requestCorrectaDevuelveWalletId()
     {
         $walletDataSource = new FileWalletDataSource();
         $wallet = new Wallet("1234");
@@ -46,8 +45,7 @@ class GetWalletCryptoControllerTest extends TestCase
         $response = $this->get('/api/wallet/1234');
 
         $response->assertJsonFragment([
-            'status' => 'Ok'
+            'status' => 'OK'
         ]);
     }
 }
-

@@ -23,6 +23,7 @@ class GetWalletCryptoService
 
         $coins = $wallet->getCoins();
         $jsonContent = array();
+        $jsonContent["status"] = "OK";
 
         foreach ($coins as $coin) {
             $jsonArrayContent = array();
@@ -36,10 +37,6 @@ class GetWalletCryptoService
             $jsonContent[] = $jsonArrayContent;
         }
 
-        return response()->json(
-            "OK",
-            $jsonContent
-        );
-
+        return response()->json($jsonContent);
     }
 }

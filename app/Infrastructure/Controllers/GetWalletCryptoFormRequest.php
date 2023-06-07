@@ -12,24 +12,24 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class GetWalletCryptoFormRequest extends BaseController
 {
-    public function __invoke($wallet_id): JsonResponse
+    private function validacionIncorrecta(): JsonResponse
     {
-        try {
-            $walletId = request()->get('wallet_id');
-        }
-        catch (ContainerExceptionInterface | NotFoundExceptionInterface $ex) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Error parametros incorrectos',
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        return response()->json([
+            'status' => 'Error',
+            'message' => 'Error parametros incorrectos',
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+    public function __invoke($walletId): JsonResponse
+    {
+        if (!is_numeric($walletId)) {
+            return $this->validacionIncorrecta();
         }
 
         $controller = new GetWalletCryptoController();
 
         try {
             $response = $controller->obtenerCrypto($walletId);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'Error',
                 'message' => $e->getMessage(),
