@@ -3,8 +3,10 @@
 namespace Tests\app\Infrastructure\Controller;
 
 use App\Application\UserDataSource\UserDataSource;
+use App\Domain\Coin;
 use App\Domain\User;
 use App\Domain\Wallet;
+use App\Infrastructure\Persistence\ApiCoinDataSource;
 use App\Infrastructure\Persistence\FileUserDataSource;
 use App\Infrastructure\Persistence\FileWalletDataSource;
 use Exception;
@@ -17,7 +19,7 @@ class SellCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestConParametrosIncorrectosDevuelveError()
+    public function requestConParametrosIncorrectosDevuelveError()
     {
         $body = [
             'faskldk' => '1234'
@@ -30,7 +32,7 @@ class SellCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestConWalletIdIncorrectoDevuelveError()
+    public function requestConWalletIdIncorrectoDevuelveError()
     {
         $body = [
             'coin_id' => '90',
@@ -45,10 +47,14 @@ class SellCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestCorrectaDevuelveWalletId()
+    public function requestCorrectaDevuelveWalletId()
     {
         $walletDataSource = new FileWalletDataSource();
+        $apiCoin = new ApiCoinDataSource();
         $wallet = new Wallet("1234");
+
+        $wallet->addCoin($apiCoin->getById('90', 1500));
+
         $walletDataSource->addWallet($wallet);
         $body = [
             'coin_id' => '90',
@@ -58,7 +64,7 @@ class SellCoinControllerTest extends TestCase
         $response = $this->post('/api/coin/sell', $body);
 
         $response->assertJsonFragment([
-            'status' => 'Ok'
+            'status' => 'OK'
         ]);
     }
 }

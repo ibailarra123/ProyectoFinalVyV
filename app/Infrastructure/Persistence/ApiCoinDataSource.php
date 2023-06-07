@@ -32,7 +32,7 @@ class ApiCoinDataSource implements CoinDataSource
                         $cryptocoin->name,
                         $cryptocoin->symbol,
                         $amountUSD / $cryptocoin->price_usd,
-                        $amountUSD
+                        $cryptocoin->price_usd
                     );
                     return ($coin);
                 }

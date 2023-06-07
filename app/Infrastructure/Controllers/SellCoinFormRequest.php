@@ -37,8 +37,7 @@ class SellCoinFormRequest extends BaseController
 
         try {
             $controller->venderCoin($coinId, $walletId, $amountUsd);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'Error',
                 'message' => $e->getMessage(),
@@ -46,7 +45,7 @@ class SellCoinFormRequest extends BaseController
         }
 
         return response()->json([
-            'status' => 'Ok',
+            'status' => 'OK',
             'message' => 'Venta realizada correctamente',
         ], Response::HTTP_OK);
     }
