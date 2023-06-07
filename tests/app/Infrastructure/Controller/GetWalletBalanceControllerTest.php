@@ -17,9 +17,9 @@ class GetWalletBalanceControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestConParametrosIncorrectosDevuelveError()
+    public function requestConParametrosIncorrectosDevuelveError()
     {
-        $response = $this->get('/api/wallet/balance');
+        $response = $this->get('/api/wallet/asdfs/balance');
 
         $response->assertExactJson(['status' => 'Error', 'message' => 'Error parametros incorrectos']);
     }
@@ -27,7 +27,7 @@ class GetWalletBalanceControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestConWalletIdIncorrectoDevuelveError()
+    public function requestConWalletIdIncorrectoDevuelveError()
     {
         $response = $this->get('/api/wallet/1/balance');
 
@@ -37,7 +37,7 @@ class GetWalletBalanceControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestCorrectaDevuelveWalletId()
+    public function requestCorrectaDevuelveWalletId()
     {
         $walletDataSource = new FileWalletDataSource();
         $wallet = new Wallet("1234");
@@ -45,7 +45,7 @@ class GetWalletBalanceControllerTest extends TestCase
         $response = $this->get('/api/wallet/1234/balance');
 
         $response->assertJsonFragment([
-            'status' => 'Ok'
+            'status' => 'OK'
         ]);
     }
 }
