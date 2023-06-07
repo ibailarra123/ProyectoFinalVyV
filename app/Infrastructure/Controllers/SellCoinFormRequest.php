@@ -19,7 +19,8 @@ class SellCoinFormRequest extends BaseController
     }
     public function __invoke(): JsonResponse
     {
-        $validator = Validator::make(request()->all(), [
+        $validatorClass = new Validator();
+        $validator = $validatorClass::make(request()->all(), [
             'coin_id' => ['required', 'max:255'],
             'wallet_id' => ['required', 'max:255'],
             'amount_usd' => ['required', 'max:255']
