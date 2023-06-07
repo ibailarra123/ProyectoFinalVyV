@@ -4,16 +4,36 @@ namespace App\Infrastructure\Persistence;
 
 use App\Application\UserDataSource\UserDataSource;
 use App\Domain\User;
+use Illuminate\Support\Facades\Cache;
 
 class FileUserDataSource implements UserDataSource
 {
-    public function findByEmail(string $email): User
+    public function addUser(User $user): bool
     {
-        return new User(1, "email@email.com");
-    }
+        $users = Cache::get("users");
+        $users[$user->getId()] = $user;
 
+        return Cache::forever("users", $users);
+    }
     public function getAll(): array
     {
-        return [new User(1, "email@email.com"), new User(2, "another_email@email.com")];
+        return Cache::get("users") != null ? Cache::get("users") : array();
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        $users = Cache::get("users");
+        foreach ($users as $user)
+        {
+            if ($user->getEmail() == $email) return $user;
+        }
+        return null;
+    }
+
+    public function findById(string $id): ?User
+    {
+        $users = Cache::get("users");
+
+        return  $users != null ? $users[$id] : null;
     }
 }
