@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//prueba
 
 Route::get('/status', GetStatusController::class);
