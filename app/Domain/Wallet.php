@@ -13,7 +13,7 @@ class Wallet
     public function __construct(int $user_id)
     {
         $this->user_id = $user_id;
-        $coins = array();
+        $this->coins = array();
         $this->wallet_id = rand(0, 1000);
     }
 
@@ -53,11 +53,9 @@ class Wallet
     public function getTotalAmount(): float
     {
         $sum = 0;
-        foreach ($this->coins as $coin)
-        {
+        foreach ($this->coins as $coin) {
             $sum += $coin->getValueUsd();
         }
         return $sum;
     }
 }
-
