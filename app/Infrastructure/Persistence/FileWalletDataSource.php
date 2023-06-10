@@ -45,7 +45,7 @@ class FileWalletDataSource implements WalletDataSource
 
         return $this->cache::forever("wallets", $wallets);
     }
-    
+
     public function getAll(): array
     {
         return $this->cache::get("wallets") != null ? $this->cache::get("wallets") : array();
