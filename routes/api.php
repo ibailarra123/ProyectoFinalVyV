@@ -26,6 +26,6 @@ Route::get('/status', GetStatusController::class);
 Route::post('/coin/buy', CoinBuyFormRequest::class);
 Route::post('/coin/sell', SellCoinFormRequest::class);
 Route::post('/wallet/open', CreateWalletFormRequest::class);
-Route::get('/user/open/{user_id}', CreateUserFormRequest::class);
+Route::get('/user/open/{user_id}/{email}', CreateUserFormRequest::class);
 Route::get('/wallet/{wallet_id}', GetWalletCryptoFormRequest::class);
 Route::get('/wallet/{wallet_id}/balance', GetWalletBalanceFormRequest::class);
