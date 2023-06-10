@@ -18,7 +18,7 @@ class GetWalletCryptoService
 
         $wallet = $walletDataSource->findById($walletId);
         if ($wallet == null) {
-            throw new Exception('Error wallet no existe');
+            throw new Exception('Wallet no existe');
         }
 
         $coins = $wallet->getCoins();

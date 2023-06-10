@@ -21,7 +21,7 @@ class GetWalletCryptoControllerTest extends TestCase
     {
         $response = $this->get('/api/wallet/asdfsa');
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error parametros incorrectos']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Parametros incorrectos']);
     }
 
     /**
@@ -31,7 +31,7 @@ class GetWalletCryptoControllerTest extends TestCase
     {
         $response = $this->get('/api/wallet/1');
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error wallet no existe']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Wallet no existe']);
     }
 
     /**
