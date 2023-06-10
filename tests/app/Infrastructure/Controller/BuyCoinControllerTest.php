@@ -17,20 +17,20 @@ class BuyCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestConParametrosIncorrectosDevuelveError()
+    public function requestConParametrosIncorrectosDevuelveError()
     {
         $body = [
             'faskldk' => '1234'
         ];
         $response = $this->post('/api/coin/buy', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error parametros incorrectos']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Parametros incorrectos']);
     }
 
     /**
      * @test
      */
-    public function RequestConWalletIdIncorrectoDevuelveError()
+    public function requestConWalletIdIncorrectoDevuelveError()
     {
         $body = [
             'coin_id' => '90',
@@ -39,13 +39,13 @@ class BuyCoinControllerTest extends TestCase
         ];
         $response = $this->post('/api/coin/buy', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error wallet no existe']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Wallet no existe']);
     }
 
     /**
      * @test
      */
-    public function RequestCorrectaDevuelveWalletId()
+    public function requestCorrectaDevuelveWalletId()
     {
         $walletDataSource = new FileWalletDataSource();
         $wallet = new Wallet("1234");

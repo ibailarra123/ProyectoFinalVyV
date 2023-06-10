@@ -11,12 +11,10 @@ class CoinBuyController extends BaseController
     /**
      * @throws Exception
      */
-    public function comprarCoin(String $coinId, String $walletId, float $amountUsd): void
+    public function comprarCoin(string $coinId, string $walletId, float $amountUsd): void
     {
         $coinService = new BuyCoinService();
 
         $coinService->execute($coinId, $walletId, $amountUsd);
     }
-    //Prueba
-    //Prueba2
 }

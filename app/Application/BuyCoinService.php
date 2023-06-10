@@ -19,10 +19,11 @@ class BuyCoinService
 
         $wallet = $walletDataSource->findById($walletId);
         if ($wallet == null) {
-            throw new Exception('Error wallet no existe');
+            throw new Exception('Wallet no existe');
         }
 
         $coin = $apiDataSource->getById($coinId, $amountUsd);
         $wallet->addCoin($coin);
+        $walletDataSource->updateWallet($wallet);
     }
 }
