@@ -43,5 +43,6 @@ class SellCoinService
                                             ' monedas y quieres vender ' .
                                             $coin->getAmount());
         }
+        $walletDataSource->updateWallet($wallet);
     }
 }
