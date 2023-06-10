@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 class FileUserDataSource implements UserDataSource
 {
     private Cache $cache;
+  
     public function __construct()
     {
         $this->cache = new Cache();
