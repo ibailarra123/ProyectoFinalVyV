@@ -38,7 +38,7 @@ class CreateUserFormRequest extends BaseController
 
         return response()->json([
             'status' => 'Ok',
-            'message' => $userId,
+            'message' => 'Creado usuario con id: ' . $userId,
         ], Response::HTTP_OK);
     }
 }
