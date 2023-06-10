@@ -2,6 +2,8 @@
 
 namespace App\Domain;
 
+use Exception;
+
 class Coin
 {
     private string $coin_id;
@@ -54,30 +56,34 @@ class Coin
 
     /**
      * @return float
+     * @throws Exception
      */
     public function getValueUsd(): ?float
     {
-        $this->value_usd = $this->updateValueUsd();
+        $this->value_usd = $this->updateValueUsd(0, 99, $this->getCoinId());
         return $this->value_usd;
     }
 
-    public function updateValueUsd($start,$id): ?float
+    /**
+     * @throws Exception
+     */
+    public function updateValueUsd($start, $end, $coinId): ?float
     {
-        $url = 'https://api.coinlore.net/api/tickers/?start='. $start .'&limit=100';
+        $url = 'https://api.coinlore.net/api/tickers/?start=' . $start . '&limit=' . $end;
         $json = file_get_contents($url);
         $data = json_decode($json, true);
 
         foreach ($data['data'] as $item) {
-            if ($item['id'] === $id) {
+            if ($item['id'] == $coinId) {
                 return $item['price_usd'];
             }
         }
 
         // Si no se encontró el ID en la página actual, se intenta en la siguiente
-        if ($data['total'] > $start + 100) {
-            return updateValueUsd($start + 101, $id);
+        if ($end <= 500) {
+            return $this->updateValueUsd($start + 100, $end + 100, $coinId);
         }
 
-        return null; // No se encontró el ID en el JSON completo
+        throw new Exception('Moneda no encontrada');
     }
 }

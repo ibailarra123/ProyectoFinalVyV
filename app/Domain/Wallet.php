@@ -10,6 +10,7 @@ class Wallet
     private int $wallet_id;
     private int $user_id;
     private array $coins;
+
     public function __construct(int $user_id)
     {
         $this->user_id = $user_id;
