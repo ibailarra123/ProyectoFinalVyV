@@ -8,12 +8,15 @@ use Exception;
 
 class ApiCoinDataSource implements CoinDataSource
 {
+    /**
+     * @throws Exception
+     */
     public function getById(string $coinId, float $amountUSD): ?Coin
     {
         $curl = curl_init();
         for ($start = 0; $start < 500; $start += 100) {
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.coinlore.net/api/tickers/?start=' . $start . '&limit=100',
+                CURLOPT_URL => 'https://api.coinlore.net/api/tickers/?start=' . $start . '&limit=' . ($start + 99),
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -39,6 +42,6 @@ class ApiCoinDataSource implements CoinDataSource
             }
         }
         curl_close($curl);
-        throw new Exception('Error, moneda no existe');
+        throw new Exception('Moneda no existe');
     }
 }
