@@ -13,6 +13,16 @@ class FileUserDataSource implements UserDataSource
     {
         $this->cache = new Cache();
     }
+
+    public function create(string $userId, string $email): User
+    {
+        $user = new User(intval($userId), $email);
+
+        $this->addUser($user);
+
+        return $user;
+    }
+
     public function addUser(User $user): bool
     {
         $users = $this->cache::get("users");
