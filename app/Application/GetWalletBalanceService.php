@@ -19,19 +19,19 @@ class GetWalletBalanceService
 
         $wallet = $walletDataSource->findById($walletId);
         if ($wallet == null) {
-            throw new Exception('Error wallet no existe');
+            throw new Exception('Wallet no existe');
         }
 
         $coins = $wallet->getCoins();
         $balanceUSD = 0;
 
         foreach ($coins as $coin) {
-            $balanceUSD += $coin->getValueUsd();
+            $balanceUSD += $coin->getValueUsd() * $coin->getAmount();
         }
 
         return response()->json([
             'status' => 'OK',
-            'message' => $balanceUSD,
+            'message' => 'Tu balance es de: ' . $balanceUSD . '$',
         ], Response::HTTP_OK);
     }
 }
