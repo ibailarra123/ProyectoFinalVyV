@@ -45,7 +45,7 @@ class GetWalletBalanceControllerTest extends TestCase
         $response = $this->get('/api/wallet/' . $wallet->getId() . '/balance');
 
         $response->assertJsonFragment([
-            'status' => 'OK' 
+            'status' => 'OK'
         ]);
     }
 }
