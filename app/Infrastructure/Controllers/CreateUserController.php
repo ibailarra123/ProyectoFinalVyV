@@ -12,10 +12,10 @@ class CreateUserController extends BaseController
     /**
      * @throws Exception
      */
-    public function crearUsuario(string $userId): void
+    public function crearUsuario(string $userId, string $email): void
     {
         $userService = new CreateUserService();
 
-        $userService->execute($userId);
+        $userService->execute($userId, $email);
     }
 }

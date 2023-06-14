@@ -26,7 +26,7 @@ class SellCoinControllerTest extends TestCase
         ];
         $response = $this->post('/api/coin/sell', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error parametros incorrectos']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Parametros incorrectos']);
     }
 
     /**
@@ -41,7 +41,7 @@ class SellCoinControllerTest extends TestCase
         ];
         $response = $this->post('/api/coin/sell', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error wallet no existe']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Wallet no existe']);
     }
 
     /**
@@ -58,7 +58,7 @@ class SellCoinControllerTest extends TestCase
         $walletDataSource->addWallet($wallet);
         $body = [
             'coin_id' => '90',
-            'wallet_id' => '1234',
+            'wallet_id' => $wallet->getId(),
             'amount_usd' => 1500
         ];
         $response = $this->post('/api/coin/sell', $body);

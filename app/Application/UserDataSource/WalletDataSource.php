@@ -4,7 +4,7 @@ namespace App\Application\UserDataSource;
 
 use App\Domain\Wallet;
 
-Interface WalletDataSource
+interface WalletDataSource
 {
     /**
      * @return bool
@@ -19,5 +19,5 @@ Interface WalletDataSource
     /**
      * @return Wallet or null
      */
-    public function findById(string $id): ?Wallet;
+    public function findById(string $idWallet): ?Wallet;
 }

@@ -29,7 +29,7 @@ class GetWalletBalanceControllerTest extends TestCase
      */
     public function requestConWalletIdIncorrectoDevuelveError()
     {
-        $response = $this->get('/api/wallet/1/balance');
+        $response = $this->get('/api/wallet/-1/balance');
 
         $response->assertExactJson(['status' => 'Error', 'message' => 'Error wallet no existe']);
     }

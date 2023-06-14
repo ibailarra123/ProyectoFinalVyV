@@ -11,7 +11,7 @@ use Exception;
 class SellCoinService
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute(string $coinId, string $walletId, float $amountUsd): void
     {
@@ -20,7 +20,7 @@ class SellCoinService
 
         $wallet = $walletDataSource->findById($walletId);
         if ($wallet == null) {
-            throw new Exception('Error wallet no existe');
+            throw new Exception('Wallet no existe');
         }
 
         $coin = $apiDataSource->getById($coinId, $amountUsd);
@@ -38,10 +38,11 @@ class SellCoinService
             );
             $wallet->addCoin($newCoin);
         } elseif ($amountDifference < 0) {
-            throw new Exception('Error tienes ' .
+            throw new Exception('Tienes ' .
                                             $oldCoin->getAmount() .
                                             ' monedas y quieres vender ' .
                                             $coin->getAmount());
         }
+        $walletDataSource->updateWallet($wallet);
     }
 }

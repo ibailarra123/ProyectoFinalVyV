@@ -19,7 +19,7 @@ class CreateUserFormRequest extends BaseController
             'message' => 'Error parametros incorrectos',
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
-    public function __invoke($userId): JsonResponse
+    public function __invoke($userId, $email): JsonResponse
     {
         if (!is_numeric($userId)) {
             return $this->validacionIncorrecta();
@@ -28,7 +28,7 @@ class CreateUserFormRequest extends BaseController
         $controller = new CreateUserController();
 
         try {
-            $controller->crearUsuario($userId);
+            $controller->crearUsuario($userId, $email);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'Error',
@@ -38,7 +38,7 @@ class CreateUserFormRequest extends BaseController
 
         return response()->json([
             'status' => 'Ok',
-            'message' => $userId,
+            'message' => 'Creado usuario con id: ' . $userId,
         ], Response::HTTP_OK);
     }
 }

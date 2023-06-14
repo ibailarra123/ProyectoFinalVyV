@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Exception;
+use Exception;
 
 class CreateWalletFormRequest extends BaseController
 {
@@ -15,12 +15,13 @@ class CreateWalletFormRequest extends BaseController
     {
         return response()->json([
             'status' => 'Error',
-            'message' => 'Error parametros incorrectos',
+            'message' => 'Parametros incorrectos',
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
     public function __invoke(): JsonResponse
     {
-        $validator = Validator::make(request()->all(), [
+        $validatorClass = new Validator();
+        $validator = $validatorClass::make(request()->all(), [
             'user_id' => ['required', 'max:255']
         ]);
 
@@ -34,8 +35,7 @@ class CreateWalletFormRequest extends BaseController
 
         try {
             $walletId = $controller->crearWallet($userId);
-        }
-        catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'Error',
                 'message' => $e->getMessage(),
@@ -44,7 +44,7 @@ class CreateWalletFormRequest extends BaseController
 
         return response()->json([
             'status' => 'Ok',
-            'message' => $walletId,
+            'message' => 'Creado wallet con id: ' . $walletId,
         ], Response::HTTP_OK);
     }
 }

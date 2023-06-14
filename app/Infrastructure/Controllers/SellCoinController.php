@@ -3,13 +3,14 @@
 namespace App\Infrastructure\Controllers;
 
 use App\Application\SellCoinService;
+use Exception;
 
 class SellCoinController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function venderCoin(String $coinId, String $walletId, float $amountUsd): void
+    public function venderCoin(string $coinId, string $walletId, float $amountUsd): void
     {
         $coinService = new SellCoinService();
 

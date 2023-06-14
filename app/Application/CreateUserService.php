@@ -14,7 +14,7 @@ class CreateUserService
     /**
      * @throws Exception
      */
-    public function execute(string $userId): ?string
+    public function execute(string $userId, string $email): ?string
     {
         $userDataSource = new FileUserDataSource();
 
@@ -22,7 +22,7 @@ class CreateUserService
             throw new Exception('Error el usuario ya existe');
         }
 
-        $user = $userDataSource->create($userId);
+        $user = $userDataSource->create($userId, $email);
 
         return strval($user->getId());
     }

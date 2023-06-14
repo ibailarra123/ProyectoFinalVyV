@@ -17,14 +17,14 @@ class UserDataSourceTest extends TestCase
      */
     public function findUserById()
     {
-        $id = "1";
+        $idUser = "1";
         $email = "prueba@gmail.com";
-        $user = new User($id, $email);
+        $user = new User($idUser, $email);
         $data_source = new FileUserDataSource();
         $new_data_source = new FileUserDataSource();
 
         $data_source->addUser($user);
-        $result = $new_data_source->findById($id);
+        $result = $new_data_source->findById($idUser);
 
         self::assertEquals($result, $user);
     }
@@ -34,9 +34,9 @@ class UserDataSourceTest extends TestCase
      */
     public function findUserByEmail()
     {
-        $id = "1";
+        $idUser = "1";
         $email = "prueba@gmail.com";
-        $user = new User($id, $email);
+        $user = new User($idUser, $email);
         $data_source = new FileUserDataSource();
         $new_data_source = new FileUserDataSource();
 

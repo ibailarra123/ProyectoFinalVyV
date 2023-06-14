@@ -15,33 +15,33 @@ class CreateWalletControllerTest extends TestCase
     /**
      * @test
      */
-    public function RequestConParametrosIncorrectosDevuelveError()
+    public function requestConParametrosIncorrectosDevuelveError()
     {
         $body = [
             'faskldk' => '1234'
         ];
         $response = $this->post('/api/wallet/open', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error parametros incorrectos']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Parametros incorrectos']);
     }
 
     /**
      * @test
      */
-    public function RequestConUserIdIncorrectoDevuelveError()
+    public function requestConUserIdIncorrectoDevuelveError()
     {
         $body = [
             'user_id' => '1234'
         ];
         $response = $this->post('/api/wallet/open', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error usuario no existe']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Usuario no existe']);
     }
 
     /**
      * @test
      */
-    public function RequestCorrectaDevuelveWalletId()
+    public function requestCorrectaDevuelveWalletId()
     {
         $userDataSource = new FileUserDataSource();
         $userDataSource->addUser(new User(1, "prueba@prueba,com"));
