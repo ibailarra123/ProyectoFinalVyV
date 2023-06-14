@@ -21,7 +21,7 @@ class GetWalletBalanceControllerTest extends TestCase
     {
         $response = $this->get('/api/wallet/asdfs/balance');
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error parametros incorrectos']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Parametros incorrectos']);
     }
 
     /**
@@ -31,7 +31,7 @@ class GetWalletBalanceControllerTest extends TestCase
     {
         $response = $this->get('/api/wallet/-1/balance');
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Error wallet no existe']);
+        $response->assertExactJson(['status' => 'Error', 'message' => 'Wallet no existe']);
     }
 
     /**
@@ -40,12 +40,12 @@ class GetWalletBalanceControllerTest extends TestCase
     public function requestCorrectaDevuelveWalletId()
     {
         $walletDataSource = new FileWalletDataSource();
-        $wallet = new Wallet("1234");
+        $wallet = new Wallet(1234);
         $walletDataSource->addWallet($wallet);
-        $response = $this->get('/api/wallet/1234/balance');
+        $response = $this->get('/api/wallet/' . $wallet->getId() . '/balance');
 
         $response->assertJsonFragment([
-            'status' => 'OK'
+            'status' => 'OK' 
         ]);
     }
 }
