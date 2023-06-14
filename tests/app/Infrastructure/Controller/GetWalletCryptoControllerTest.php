@@ -42,7 +42,7 @@ class GetWalletCryptoControllerTest extends TestCase
         $walletDataSource = new FileWalletDataSource();
         $wallet = new Wallet("1234");
         $walletDataSource->addWallet($wallet);
-        $response = $this->get('/api/wallet/1234');
+        $response = $this->get('/api/wallet/' . $wallet->getId());
 
         $response->assertJsonFragment([
             'status' => 'OK'
