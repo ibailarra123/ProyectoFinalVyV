@@ -52,7 +52,7 @@ class BuyCoinControllerTest extends TestCase
         $walletDataSource->addWallet($wallet);
         $body = [
             'coin_id' => '90',
-            'wallet_id' => '1234',
+            'wallet_id' => $wallet->getId(),
             'amount_usd' => 1500
         ];
         $response = $this->post('/api/coin/buy', $body);
