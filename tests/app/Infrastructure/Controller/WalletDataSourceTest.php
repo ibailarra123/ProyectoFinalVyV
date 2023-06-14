@@ -18,13 +18,14 @@ class WalletDataSourceTest extends TestCase
      */
     public function findWalletById()
     {
-        $idWallet = "1";
-        $wallet = new Wallet($idWallet);
+        $userId = "1";
+        $wallet = new Wallet($userId);
+        $walletId = $wallet->getId();
         $data_source = new FileWalletDataSource();
         $new_data_source = new FileWalletDataSource();
 
         $data_source->addWallet($wallet);
-        $result = $new_data_source->findById($idWallet);
+        $result = $new_data_source->findById($walletId);
 
         self::assertEquals($result, $wallet);
     }
