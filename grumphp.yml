@@ -4,6 +4,10 @@ grumphp:
       standard: [PSR12]
       ignore_patterns:
         - '/vendor/**'
+        - '/config/**'
+        - '/public/**'
+        - '/resources/**'
+        - '/app/Infrastructure/Providers/**'
     phpmd:
       ruleset: ['cleancode', 'codesize', 'naming']
     phpunit:
