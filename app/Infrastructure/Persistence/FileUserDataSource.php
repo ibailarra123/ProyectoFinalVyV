@@ -29,7 +29,7 @@ class FileUserDataSource implements UserDataSource
         $users = $this->cache::get("users");
         $users[$user->getId()] = $user;
 
-        return $this->cache::forever("users", $users);
+        return $this->cache::put("users", $users, 600);
     }
     public function getAll(): array
     {
