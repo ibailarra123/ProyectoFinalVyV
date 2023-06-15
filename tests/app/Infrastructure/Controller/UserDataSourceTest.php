@@ -12,19 +12,32 @@ use Tests\TestCase;
 
 class UserDataSourceTest extends TestCase
 {
+    private $mockery;
+    private $userCache;
+
+
+    /**
+     * @setUp
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->mockery = new Mockery();
+        $this->userCache = $this->mockery::mock(FileUserDataSource::class);
+    }
     /**
      * @test
      */
     public function findUserById()
     {
-        $idUser = "1";
-        $email = "prueba@gmail.com";
-        $user = new User($idUser, $email);
+        $user = new User("1", "prueba@gmail.com");
+        $this->userCache->shouldReceive("findById")->andReturn($user);
+        $this->app->instance(UserDataSource::class, $this->userCache);
         $data_source = new FileUserDataSource();
         $new_data_source = new FileUserDataSource();
 
         $data_source->addUser($user);
-        $result = $new_data_source->findById($idUser);
+        $result = $new_data_source->findById($user->getId());
 
         self::assertEquals($result, $user);
     }

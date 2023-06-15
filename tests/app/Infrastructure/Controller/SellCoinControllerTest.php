@@ -3,6 +3,7 @@
 namespace Tests\app\Infrastructure\Controller;
 
 use App\Application\UserDataSource\UserDataSource;
+use App\Application\UserDataSource\WalletDataSource;
 use App\Domain\Coin;
 use App\Domain\User;
 use App\Domain\Wallet;
@@ -16,6 +17,19 @@ use Tests\TestCase;
 
 class SellCoinControllerTest extends TestCase
 {
+    private $mockery;
+    private $walletCache;
+
+
+    /**
+     * @setUp
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->mockery = new Mockery();
+        $this->walletCache = $this->mockery::mock(FileWalletDataSource::class);
+    }
     /**
      * @test
      */
@@ -34,6 +48,10 @@ class SellCoinControllerTest extends TestCase
      */
     public function requestConWalletIdIncorrectoDevuelveError()
     {
+        $expectedResponse = ['status' => 'Error', 'message' => 'Wallet no existe'];
+        $this->walletCache->shouldReceive("findById")->andReturn(null);
+        $this->app->instance(WalletDataSource::class, $this->walletCache);
+
         $body = [
             'coin_id' => '90',
             'wallet_id' => '1',
@@ -41,7 +59,7 @@ class SellCoinControllerTest extends TestCase
         ];
         $response = $this->post('/api/coin/sell', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Wallet no existe']);
+        $response->assertExactJson($expectedResponse);
     }
 
     /**

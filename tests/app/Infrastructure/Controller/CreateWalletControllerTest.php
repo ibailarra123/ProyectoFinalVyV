@@ -12,17 +12,31 @@ use Tests\TestCase;
 
 class CreateWalletControllerTest extends TestCase
 {
+    private $mockery;
+    private $userCache;
+
+
+    /**
+     * @setUp
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->mockery = new Mockery();
+        $this->userCache = $this->mockery::mock(FileUserDataSource::class);
+    }
     /**
      * @test
      */
     public function requestConParametrosIncorrectosDevuelveError()
     {
+        $expectedResponse = ['status' => 'Error', 'message' => 'Parametros incorrectos'];
         $body = [
             'faskldk' => '1234'
         ];
         $response = $this->post('/api/wallet/open', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Parametros incorrectos']);
+        $response->assertExactJson($expectedResponse);
     }
 
     /**
@@ -30,12 +44,15 @@ class CreateWalletControllerTest extends TestCase
      */
     public function requestConUserIdIncorrectoDevuelveError()
     {
+        $expectedResponse = ['status' => 'Error', 'message' => 'Usuario no existe'];
+        $this->userCache->shouldReceive("findById")->andReturn(null);
+        $this->app->instance(UserDataSource::class, $this->userCache);
         $body = [
             'user_id' => '1234'
         ];
         $response = $this->post('/api/wallet/open', $body);
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Usuario no existe']);
+        $response->assertExactJson($expectedResponse);
     }
 
     /**
@@ -43,6 +60,9 @@ class CreateWalletControllerTest extends TestCase
      */
     public function requestCorrectaDevuelveWalletId()
     {
+        $expectedResponse = [
+            'status' => 'Ok'
+        ];
         $userDataSource = new FileUserDataSource();
         $userDataSource->addUser(new User(1, "prueba@prueba,com"));
         $body = [
@@ -50,8 +70,6 @@ class CreateWalletControllerTest extends TestCase
         ];
         $response = $this->post('/api/wallet/open', $body);
 
-        $response->assertJsonFragment([
-            'status' => 'Ok'
-        ]);
+        $response->assertJsonFragment($expectedResponse);
     }
 }
