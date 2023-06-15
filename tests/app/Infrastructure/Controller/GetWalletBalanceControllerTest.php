@@ -3,6 +3,7 @@
 namespace Tests\app\Infrastructure\Controller;
 
 use App\Application\UserDataSource\UserDataSource;
+use App\Application\UserDataSource\WalletDataSource;
 use App\Domain\User;
 use App\Domain\Wallet;
 use App\Infrastructure\Persistence\FileUserDataSource;
@@ -14,6 +15,19 @@ use Tests\TestCase;
 
 class GetWalletBalanceControllerTest extends TestCase
 {
+    private $mockery;
+    private $walletCache;
+
+
+    /**
+     * @setUp
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->mockery = new Mockery();
+        $this->walletCache = $this->mockery::mock(FileWalletDataSource::class);
+    }
     /**
      * @test
      */
@@ -29,9 +43,13 @@ class GetWalletBalanceControllerTest extends TestCase
      */
     public function requestConWalletIdIncorrectoDevuelveError()
     {
+        $expectedResponse = ['status' => 'Error', 'message' => 'Wallet no existe'];
+        $this->walletCache->shouldReceive("findById")->andReturn(null);
+        $this->app->instance(WalletDataSource::class, $this->walletCache);
+
         $response = $this->get('/api/wallet/-1/balance');
 
-        $response->assertExactJson(['status' => 'Error', 'message' => 'Wallet no existe']);
+        $response->assertExactJson($expectedResponse);
     }
 
     /**

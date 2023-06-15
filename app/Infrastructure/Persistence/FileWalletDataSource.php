@@ -35,7 +35,7 @@ class FileWalletDataSource implements WalletDataSource
         $wallets = $this->getAll();
         $wallets[$wallet->getId()] = $wallet;
 
-        return $this->cache::forever("wallets", $wallets);
+        return $this->cache::put("wallets", $wallets, 600);
     }
 
     public function updateWallet(Wallet $wallet): bool

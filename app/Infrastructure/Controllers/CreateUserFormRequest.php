@@ -16,7 +16,7 @@ class CreateUserFormRequest extends BaseController
     {
         return response()->json([
             'status' => 'Error',
-            'message' => 'Error parametros incorrectos',
+            'message' => 'Parametros incorrectos',
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
     public function __invoke($userId, $email): JsonResponse

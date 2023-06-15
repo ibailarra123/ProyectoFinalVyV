@@ -20,5 +20,4 @@ class GetStatusControllerTest extends TestCase
 
         $response->assertExactJson(['status' => 'Ok', 'message' => 'Systems are up and running']);
     }
-    //Probando2
 }

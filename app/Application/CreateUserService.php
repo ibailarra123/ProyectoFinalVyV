@@ -19,7 +19,7 @@ class CreateUserService
         $userDataSource = new FileUserDataSource();
 
         if ($userDataSource->findById($userId) != null) {
-            throw new Exception('Error el usuario ya existe');
+            throw new Exception('El usuario ya existe');
         }
 
         $user = $userDataSource->create($userId, $email);
